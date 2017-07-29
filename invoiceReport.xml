@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+   <data>
+   <record id= "mod_account_invoice_form" model= "ir.ui.view">
+        <field name="inherit_id" ref="account.invoice_form" />
+        <field name="model">account.invoice</field>
+                <field name="arch" type= "xml">
+                <field name="comment" position="after">
+                <group>
+                <label for="addationalInfo" string="Payment Terms"/>
+                <newline/>
+                <label for="comment" string="Addational Info"/>
+                <newline/>
+                </group>
+                <field name="addationalInfo"/>
+              
+                </field>
+                </field>    
+      </record>
+      
+      <template id="invoiceReport_r.invoice_cust_report">
+        <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+        <t t-call="report.external_layout">
+        <div class="page">                
+            <table style="width:100%">
+            <tr>
+                <td></td>
+                <td style="padding-left:50px;"><h2>Invoice NO.        <span t-field="o.number"/>                رقم الفاتورة</h2></td>
+            </tr>
+            </table>  
+    
+            <br/>
+            <br/>
+            <table style="width:100%">
+                <thead>
+                    <tr>
+                        <td style="width:50%;"/>
+
+                        <td style="width:50%;"></td>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                 <td style="border:1px solid black;padding:5px;width=50%;">
+                           
+                <br/><span t-field="o.partner_id"/>        
+                </td>      
+               <td style="border:1px solid black;padding:5px;width:50%;">               
+               <br/><span t-field="o.date_invoice"/>
+                <br/>
+                <br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+             <h3  class="text-center"><strong>______________________________________________________________</strong></h3>
+              <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><pre>Item Code رقم المخزون</pre></th>
+                        <th><pre>Description التفاصيل</pre></th>
+                        <th><pre>Qty الكمية</pre></th>    ............................
+
+                        <th><pre>Unit الوحدة</pre></th>
+                        <th><pre>U/Price سعر الوحدة</pre></th>
+                        <th groups="sale.group_discount_per_so_line"><pre>Disc.(%) الخصم</pre></th>
+                        <th><pre>Amount  الاجمالي</pre></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.invoice_line" t-as="oLine">
+                        <td><span t-field="oLine.product_id"/></td>
+                        <td><span t-field="oLine.name"/></td>
+                        <td><span t-field="oLine.quantity"/></td>
+                        <td><span t-field="oLine.uom_id"/></td>
+                        <td><span t-field="oLine.price_unit"/></td>
+                         <td groups="sale.group_discount_per_so_line">
+                            <span t-field="oLine.discount"/>
+                        </td>
+                        <td><span t-field="oLine.price_subtotal"/></td>
+                        
+                    </tr>
+                   
+                </tbody>
+                </table>
+                
+            
+                            
+                 <table class="table table-bordered">
+                     <tbody>  
+                       <tr>
+                            <td style="width:80%;"><strong><pre class="tab">TOTAL AMOUNT    القيمة الاجمالية</pre></strong><br/><span t-field="o.total_text"/></td>
+                         
+                            <td> <strong>TOTAL</strong> <span t-field="o.amount_total"/></td>
+                        </tr> 
+                    </tbody>
+                 </table>
+                    <table class="table table-bordered" style="width:100%">
+                     <tbody>  
+                       <tr>
+                            <td style="width:30%;"><strong><pre class="tab">Payement terms   الشروط </pre> </strong>
+                                <span t-field="o.addationalInfo"/> <br/>  
+                            </td>
+                         
+                            <td> <table class="table table-bordered" style="width:100%">
+                        <tbody>               
+                         <tr> 
+                            <td style="width:33%"><strong><pre class="tab">PREPARED BY       أعد بواسطة</pre></strong>
+                                <br/><span t-field="o.user_id"/>
+                              
+                                </td>
+                            <td><strong><pre class="tab">SIGNATURE            التوقيع</pre></strong>
+                                <br/>
+                             
+                                </td>
+                            <td><strong><pre class="tab">DATE       التاريخ</pre></strong>
+                                <br/>
+                                </td>
+                         </tr>
+                             <tr>
+                                <td><strong><pre class="tab">APPROVED BY  اعتمد بواسطة</pre></strong>
+                                    <br/>
+                                
+                                    </td>
+                                <td><strong><pre class="tab">SIGNATURE  التوقيع</pre></strong>
+                                    <br/>
+                             
+                                    </td>
+                                <td><strong><pre class="tab">DATE  التاريخ</pre></strong>
+                                    <br/>
+                                
+                                    </td>
+                             </tr>
+                             <tr>
+                               
+                                <td> <strong><pre class="tab">RECEIVED ABOVE GOODS IN GOOD CONDITION </pre></strong>استلمت البظاعة و هي في حالة جيدة
+                                    </td>
+                             </tr>
+                             <tr>
+                                
+                                <td><strong><pre class="tab">RECEIVED BY   المستلم</pre></strong>
+                                   <span t-field="o.user_id"/> <br/>
+                                 
+                                    </td>
+                                <td><strong><pre class="tab">SIGNATURE التوقيع</pre></strong>
+                                    <br/>
+                          
+                                    </td>
+                                <td><strong><pre class="tab">DATE  التاريخ</pre></strong>
+                                    <br/>                                
+                                    </td>
+                             </tr>
+
+                        </tbody>
+                    </table>
+                     </td>
+                         
+                     </tr> 
+                       </tbody>
+                     </table>
+
+       <div class="footer" style="padding-bottom:50px">
+
+
+    </div>
+
+
+            
+           
+        </div>
+         </t>
+         </t>
+         </t>
+        </template>
+
+            <report
+            id="report_sales_invoices"
+            model="account.invoice"
+            string="Custom Invoice"
+            report_type="qweb-pdf"
+            name="invoiceReport_r.invoice_cust_report"
+            file="invoiceReport_r.report_invoice_extend"
+            />
+   </data>
+</openerp>
